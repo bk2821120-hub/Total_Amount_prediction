@@ -16,7 +16,7 @@ model=joblib.load('Retail_Sales_TotalAmount_prediction_model.pkl')
 
 # Page configuration
 st.set_page_config(page_title='Retail Total Amount Prediction', layout='centered')
-st.title('Retail Sales Total Amount Prediction App')
+st.title('Retail Sales Total Amount Prediction Base On TransactionID,Age,Quantity App')
 st.write("Predict the **Total Amount** of a transaction based on customer features.")
 
 # User Inputs
