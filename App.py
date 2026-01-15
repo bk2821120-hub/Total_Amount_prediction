@@ -20,16 +20,17 @@ st.title('Retail Sales Total Amount Prediction App')
 st.write("Predict the **Total Amount** of a transaction based on customer features.")
 
 # User Inputs
-age = st.number_input('Customer Age', min_value=0, value=80)
-quantity = st.number_input('Quantity Purchased', min_value=1, value=20)
+transaction_id = st.number_input('Transaction ID',value=None)
+age = st.number_input('Customer Age',value=None)
+quantity = st.number_input('Quantity Purchased',value=None)
 
 # Predict button
 if st.button('Predict Total Amount'):
     # Prepare input for model
-    input_data = np.array([[age, quantity]])
-
+    input_data = np.array([[transaction_id, age, quantity]])
+    
     # Make prediction
     total_amount = model.predict(input_data)[0]
-
+    
     # Display result
     st.success(f"Predicted Total Amount: ₹{total_amount:.2f}")
