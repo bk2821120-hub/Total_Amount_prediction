@@ -12,7 +12,7 @@ import pandas as pd
 import  joblib
 import streamlit as st
 
-model=joblib.load('/content/Retail_Sales_TotalAmount_prediction_model.pkl')
+model=joblib.load('Retail_Sales_TotalAmount_prediction_model.pkl')
 
 # Page configuration
 st.set_page_config(page_title='Retail Total Amount Prediction', layout='centered')
