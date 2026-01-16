@@ -16,23 +16,46 @@ model=joblib.load('Retail_Sales_TotalAmount_prediction_model.pkl')
 
 df = pd.read_csv("retail_sales_dataset.csv")   # SAME dataset used for training
 st.set_page_config(page_title='Retail Total Amount Prediction', layout='centered')
-
 st.title('Retail Sales Total Amount Prediction App')
-st.write("Enter a valid Transaction ID to get prediction")
+st.write("Predict the **Total Amount** based on Transaction ID, Age, and Quantity.")
 
+# -----------------------------
+# User Inputs
+# -----------------------------
 transaction_id = st.number_input(
-    'Transaction ID',
-    min_value=1,
-    step=1
+    'Transaction ID', 
+    min_value=1, 
+    step=1,
+    help="Enter a Transaction ID from the dataset"
 )
 
+# Wider inputs for Age and Quantity
+col1, col2 = st.columns(2)
+with col1:
+    age = st.number_input(
+        'Customer Age',
+        min_value=1,
+        step=1,
+        value=25  # optional default
+    )
+with col2:
+    quantity = st.number_input(
+        'Quantity Purchased',
+        min_value=1,
+        step=1,
+        value=1  # optional default
+    )
+
+# -----------------------------
+# Predict button
+# -----------------------------
 if st.button('Predict Total Amount'):
 
+    # Check Transaction ID
     if transaction_id not in df["Transaction ID"].values:
-        # 👇 THIS MESSAGE SHOWS ON SCREEN
         st.error("❌ Transaction ID is not valid")
     else:
-        row = df[df["Transaction ID"] == transaction_id].iloc[0]
-        input_data = np.array([[transaction_id, row["Age"], row["Quantity"]]])
+        # Prepare input manually (using entered Age and Quantity)
+        input_data = np.array([[transaction_id, age, quantity]])
         total_amount = model.predict(input_data)[0]
-        st.success(f"Predicted Total Amount: ₹{total_amount:.2f}")
+        st.success(f"✅ Predicted Total Amount: ₹{total_amount:.2f}")
