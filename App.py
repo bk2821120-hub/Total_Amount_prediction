@@ -19,9 +19,6 @@ st.set_page_config(page_title='Retail Total Amount Prediction', layout='centered
 st.title('Retail Sales Total Amount Prediction App')
 st.write("Predict the **Total Amount** based on Transaction ID, Age, and Quantity.")
 
-# -----------------------------
-# User Inputs
-# -----------------------------
 transaction_id = st.number_input(
     'Transaction ID(Insert Between(1-1000)For correct Prediction)', 
     value=None, 
@@ -33,30 +30,25 @@ transaction_id = st.number_input(
 col1, col2 = st.columns(2)
 with col1:
     age = st.number_input(
-        'Customer Age',
+        'Customer Age(Optional)',
         min_value=1,
+        max_value=80, 
         step=1,
         value=None  # optional default
     )
 with col2:
     quantity = st.number_input(
-        'Quantity Purchased',
+        'Quantity Purchased(Optional)',
         min_value=1,
         step=1,
         value=None  # optional default
     )
 
-# -----------------------------
-# Predict button
-# -----------------------------
 if st.button('Predict Total Amount'):
     
-    # Only check and show prediction after button click
     if transaction_id in df["Transaction ID"].values:
-        # Prepare input manually
         input_data = np.array([[transaction_id, age, quantity]])
         total_amount = model.predict(input_data)[0]
         st.success(f"✅ Predicted Total Amount: ₹{total_amount:.2f}")
     else:
-        # Only show error if clicked with invalid ID
         st.warning("❌ Transaction ID is not valid")
