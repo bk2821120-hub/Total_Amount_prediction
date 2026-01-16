@@ -15,42 +15,24 @@ import streamlit as st
 model=joblib.load('Retail_Sales_TotalAmount_prediction_model.pkl')
 
 df = pd.read_csv("retail_sales_dataset.csv")   # SAME dataset used for training
-
-# -----------------------------
-# Streamlit UI
-# -----------------------------
 st.set_page_config(page_title='Retail Total Amount Prediction', layout='centered')
 
 st.title('Retail Sales Total Amount Prediction App')
-st.write("Predict the **Total Amount** using Transaction ID")
+st.write("Enter a valid Transaction ID to get prediction")
 
-# -----------------------------
-# User Input
-# -----------------------------
 transaction_id = st.number_input(
     'Transaction ID',
     min_value=1,
     step=1
 )
 
-# -----------------------------
-# Prediction
-# -----------------------------
 if st.button('Predict Total Amount'):
 
     if transaction_id not in df["Transaction ID"].values:
-        st.error("❌ Transaction ID not found in dataset")
+        # 👇 THIS MESSAGE SHOWS ON SCREEN
+        st.error("❌ Transaction ID is not valid")
     else:
-        # Fetch corresponding Age & Quantity from dataset
         row = df[df["Transaction ID"] == transaction_id].iloc[0]
-
-        age = row["Age"]
-        quantity = row["Quantity"]
-
-        # Prepare input
-        input_data = np.array([[transaction_id, age, quantity]])
-
-        # Predict
+        input_data = np.array([[transaction_id, row["Age"], row["Quantity"]]])
         total_amount = model.predict(input_data)[0]
-
         st.success(f"Predicted Total Amount: ₹{total_amount:.2f}")
