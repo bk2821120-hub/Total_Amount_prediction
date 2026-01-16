@@ -14,23 +14,43 @@ import streamlit as st
 
 model=joblib.load('Retail_Sales_TotalAmount_prediction_model.pkl')
 
-# Page configuration
+df = pd.read_csv("Retail_Sales.csv")   # SAME dataset used for training
+
+# -----------------------------
+# Streamlit UI
+# -----------------------------
 st.set_page_config(page_title='Retail Total Amount Prediction', layout='centered')
-st.title('Retail Sales Total Amount Prediction Base On TransactionID,Age,Quantity App')
-st.write("Predict the **Total Amount** of a transaction based on customer features.")
 
-# User Inputs
-transaction_id = st.number_input('Transaction ID',value=None)
-age = st.number_input('Customer Age',value=None)
-quantity = st.number_input('Quantity Purchased',value=None)
+st.title('Retail Sales Total Amount Prediction App')
+st.write("Predict the **Total Amount** using Transaction ID")
 
-# Predict button
+# -----------------------------
+# User Input
+# -----------------------------
+transaction_id = st.number_input(
+    'Transaction ID',
+    min_value=1,
+    step=1
+)
+
+# -----------------------------
+# Prediction
+# -----------------------------
 if st.button('Predict Total Amount'):
-    # Prepare input for model
-    input_data = np.array([[transaction_id, age, quantity]])
-    
-    # Make prediction
-    total_amount = model.predict(input_data)[0]
-    
-    # Display result
-    st.success(f"Predicted Total Amount: ₹{total_amount:.2f}")
+
+    if transaction_id not in df["Transaction ID"].values:
+        st.error("❌ Transaction ID not found in dataset")
+    else:
+        # Fetch corresponding Age & Quantity from dataset
+        row = df[df["Transaction ID"] == transaction_id].iloc[0]
+
+        age = row["Age"]
+        quantity = row["Quantity"]
+
+        # Prepare input
+        input_data = np.array([[transaction_id, age, quantity]])
+
+        # Predict
+        total_amount = model.predict(input_data)[0]
+
+        st.success(f"Predicted Total Amount: ₹{total_amount:.2f}")
