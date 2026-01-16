@@ -14,7 +14,7 @@ import streamlit as st
 
 model=joblib.load('Retail_Sales_TotalAmount_prediction_model.pkl')
 
-df = pd.read_csv("Retail_Sales.csv")   # SAME dataset used for training
+df = pd.read_csv("retail_sales_dataset.csv")   # SAME dataset used for training
 
 # -----------------------------
 # Streamlit UI
