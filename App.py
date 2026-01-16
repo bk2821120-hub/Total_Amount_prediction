@@ -24,7 +24,7 @@ st.write("Predict the **Total Amount** based on Transaction ID, Age, and Quantit
 # -----------------------------
 transaction_id = st.number_input(
     'Transaction ID', 
-    min_value=1, 
+    value=None, 
     step=1,
     help="Enter a Transaction ID from the dataset"
 )
@@ -36,14 +36,14 @@ with col1:
         'Customer Age',
         min_value=1,
         step=1,
-        value=25  # optional default
+        value=None  # optional default
     )
 with col2:
     quantity = st.number_input(
         'Quantity Purchased',
         min_value=1,
         step=1,
-        value=1  # optional default
+        value=None  # optional default
     )
 
 # -----------------------------
