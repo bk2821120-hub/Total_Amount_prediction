@@ -50,12 +50,13 @@ with col2:
 # Predict button
 # -----------------------------
 if st.button('Predict Total Amount'):
-
-    # Check Transaction ID
-    if transaction_id not in df["Transaction ID"].values:
-        st.error("❌ Transaction ID is not valid")
-    else:
-        # Prepare input manually (using entered Age and Quantity)
+    
+    # Only check and show prediction after button click
+    if transaction_id in df["Transaction ID"].values:
+        # Prepare input manually
         input_data = np.array([[transaction_id, age, quantity]])
         total_amount = model.predict(input_data)[0]
         st.success(f"✅ Predicted Total Amount: ₹{total_amount:.2f}")
+    else:
+        # Only show error if clicked with invalid ID
+        st.warning("❌ Transaction ID is not valid")
