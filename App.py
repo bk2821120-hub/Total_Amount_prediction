@@ -23,7 +23,7 @@ st.write("Predict the **Total Amount** based on Transaction ID, Age, and Quantit
 # User Inputs
 # -----------------------------
 transaction_id = st.number_input(
-    'Transaction ID', 
+    'Transaction ID(Insert Between(1-1000)For correct Prediction)', 
     value=None, 
     step=1,
     help="Enter a Transaction ID from the dataset"
